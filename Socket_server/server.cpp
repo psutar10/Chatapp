@@ -27,16 +27,23 @@ void server::serverListen()
 		cout<<"failed to listen"<<endl;
                 exit(0);
 	    }
-	cout<<"listening"<<endl;
+	cout<<"server is on listening"<<endl;
 
         connfd=accept(listenfd,(struct sockaddr*)NULL,NULL);
-        cout<<"accepted"<<endl;
+        cout<<"client request accepted"<<endl;
 }
 
-void server::sendMessage(char *message)
+void server::sendMessage()
 {
-    strcpy(sendbuff,message);
-    write(connfd,sendbuff,strlen(sendbuff));
+	cout<<"type 'exit' to stop sending messages"<<endl;
+	cout<<"Enter message"<<endl;
+    	do
+	{   
+    	    cin.getline(message,1024);
+    	    strcpy(sendbuff,message);
+    	    write(connfd,sendbuff,strlen(sendbuff));
+	}while(strcmp(message,"exit")!=0);
+	       
 }
 
 int main(int argc,char *argv[])
@@ -45,7 +52,6 @@ int main(int argc,char *argv[])
     serverObj.createSocket();
     serverObj.bindToServer();
     serverObj.serverListen();
-    char message[1024]="Hi There";
-    serverObj.sendMessage(message);
+    serverObj.sendMessage();
     return 0;
 }

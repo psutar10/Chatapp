@@ -17,10 +17,11 @@ class server
 	void bindToServer();
 	void serverListen();
 	void serverAccept();
-	void sendMessage(char *message);
+	void sendMessage();
 
     private:
 	int listenfd,connfd;
-	char sendbuff[1024];
-	struct sockaddr_in serv_addr; 	
+	char sendbuff[1024],choice,message[1024];	;
+	struct sockaddr_in serv_addr; 
+         
 };
